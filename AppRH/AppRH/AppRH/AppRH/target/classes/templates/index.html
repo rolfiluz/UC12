@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang=”pt-br” xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>| App RH - UC 12 |</title>
+
+<!-- Bootstrap -->
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- HTML5 shim e Respond.js para suporte no IE8 de elementos HTML5 e media queries -->
+<!-- ALERTA: Respond.js não funciona se você visualizar uma página file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+	<header>
+
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="/">App RH</a>
+				<button class="navbar-toggler" type="button"
+					data-bs-toggle="collapse" data-bs-target="#navbarNav"
+					aria-controls="navbarNav" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav">
+						<li class="nav-item"><a class="nav-link active"
+							aria-current="page" href="/">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="/funcionarios">Funcionários</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="/cadastrarFuncionario">Cadastrar Funcionário</a></li>
+						<li class="nav-item"><a class="nav-link" href="/vagas">
+								<< Listar Vagas>> </a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="/cadastrarVaga"> << Cadastrar Vaga>> </a></li>
+						<li class="nav-item"><a class="nav-link" href="/logout">
+								Sair </a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+	</header>
+
+	<div class="container">
+		<br> <br>
+
+		<div class="row">
+			<div class="col">
+				<div class="card text-center">
+					<div class="card-header card-title">
+						<h3>Funcionários</h3>
+					</div>
+					<div class="card-body">
+
+						<p class="card-text">Módulo responsável pelos funcionários da
+							agência de RH.</p>
+						<a href="/funcionarios" class="btn btn-primary">Listar
+							Funcionários</a> <a href="/cadastrarFuncionario"
+							class="btn btn-success">Cadastrar Funcionário</a>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card text-center">
+					<div class="card-header  card-title">
+						<h3>Vagas</h3>
+					</div>
+					<div class="card-body">
+						<p class="card-text">Módulo responsável pelas vagas ofertadas
+							pela agência de RH.</p>
+						<a href="/vagas" class="btn btn-primary">Listar Vagas</a> <a
+							href="/cadastrarVaga" class="btn btn-success">Cadastrar Vagas</a>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+		<div class="row">
+			<div class="col">
+				<br> <br>
+				<div class="card text-center card w-100">
+					<div class="card-header">
+						<h3><< Pesquisar no sistema >></h3>
+					</div>
+
+
+
+					<form class="form-inline" method="post">
+
+
+						<div class="row form-group justify-content-center w-100 p-2">
+
+
+							<div class="col col-14 col-md-2">
+
+								<label for="cars" class="my-3 p-2 w-100"><h5>Tipo
+										de busca:</h5></label>
+							</div>
+
+							<div class="col col-14 col-md-2">
+
+
+								<select name="busca" id="busca"
+									class="custom-select my-3 p-2 w-100" required>
+									<option value="">Escolher...</option>
+									<option value="todos">Todos</option>
+									<option value="nomefuncionario">Nome do Funcionário</option>
+									<option value="nomedependente">Nome do Dependente</option>
+									<option value="nomecandidato">Nome do Candidato</option>
+									<option value="titulovaga">Título da Vaga</option>
+								</select>
+
+
+							</div>
+
+							<div class="col col-14 col-md-4">
+
+								<input class="form-control form-control-lg my-3 p-2 w-100"
+									type="search" placeholder="Insira sua pesquisa..."
+									aria-label="Pesquisar" name="nome" required>
+
+							</div>
+
+							<div class="col col-14 col-md-2">
+
+								<button class="btn btn-primary my-3 p-2 w-100" type="submit">Pesquisar</button>
+
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="container">
+			<h3>
+				<br> <i> <span th:text="${busca}"></span>
+				</i>
+			</h3>
+			<h4>
+				<span th:text="${contadormsg}"></span>
+			</h4>
+
+		</div>
+		<!-- IF BUSCA POR NOME DE FUNCIONARIO -->
+		<div
+			th:if="(${busca}=='Resultados da pesquisa por nome do funcionario' and ${contador}>0) or (${busca}=='Resultados da pesquisa por todos' and ${isfunc})">
+			<table
+				class="table table-hover table-responsive w-auto table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Nome do funcionário:</th>
+						<th scope="col">Data de nascimento:</th>
+						<th scope="col">E-mail:</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="funcionario : ${funcionario}">
+
+						<td><span th:text="${funcionario.nome}"></span></a></td>
+						<td><span th:text="${funcionario.data}"></span></a></td>
+						<td><span th:text="${funcionario.email}"></span></a></td>
+
+					</tr>
+				</tbody>
+			</table>
+
+			<div th:if="${funcionarionome}">
+
+				<table
+					class="table table-hover table-responsive w-auto table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Nome do dependente:</th>
+							<th scope="col">CPF:</th>
+							<th scope="col">Data de nascimento:</th>
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="dependente : ${dependentes}">
+							<td><span th:text="${dependente.nome}"></span></td>
+							<td><span th:text="${dependente.cpf}"></span></td>
+							<td><span th:text="${dependente.datanascimento}"></span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- ELSE -->
+		<div th:unless="${funcionarionome}"></div>
+		<!-- ELSE -->
+		<div
+			th:unless="(${busca}=='Resultados da pesquisa por nome do funcionario' and ${contador}>0) or (${busca}=='Resultados da pesquisa por todos' and ${isfunc})">
+
+		</div>
+
+		<!-- IF BUSCA POR DEPENDENTES-->
+		<div
+			th:if="(${busca}=='Resultados da pesquisa por nome do dependente' and ${contador}>0) or (${busca}=='Resultados da pesquisa por todos' and ${isdependentes2})">
+
+
+			<table
+				class="table table-hover table-responsive w-auto table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Nome do dependente:</th>
+						<th scope="col">CPF:</th>
+						<th scope="col">Data de nascimento:</th>
+						<th scope="col">Responsável:</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="dependente2 : ${dependentes2}">
+						<td><span th:text="${dependente2.nome}"></span></td>
+						<td><span th:text="${dependente2.cpf}"></span></td>
+						<td><span th:text="${dependente2.datanascimento}"></span></td>
+						<td><span th:text="${dependente2.funcionario.nome}"></span></td>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!-- ELSE -->
+		<div
+			th:unless="(${busca}=='Resultados da pesquisa por nome do dependente' and ${contador}>0) or (${busca}=='Resultados da pesquisa por todos' and ${isdependentes2})">
+
+		</div>
+
+		<!-- IF BUSCA POR VAGA -->
+		<div
+			th:if="(${busca}=='Resultados da pesquisa por título da vaga' and ${contador}>0) or (${busca}=='Resultados da pesquisa por todos' and ${isvagas})">
+			<table
+				class="table table-hover table-responsive w-auto table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Nome da vaga:</th>
+						<th scope="col">Descrição:</th>
+						<th scope="col">Salário:</th>
+						<th scope="col">Expira:</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="vaga : ${vagas}">
+						<td><span th:text="${vaga.nome}"></span></td>
+						<td><span th:text="${vaga.descricao}"></span></td>
+						<td>R$ <span th:text="${vaga.salario}"></span></td>
+						<td><span th:text="${vaga.data}"></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!-- ELSE -->
+		<div
+			th:unless="(${busca}=='Resultados da pesquisa por título da vaga' and ${contador}>0) or (${busca}=='Resultados da pesquisa por todos' and ${isvagas})">
+
+		</div>
+		<div
+			th:if="(${busca}=='Resultados da pesquisa por nome do candidato' and ${contador}>0) or (${busca}=='Resultados da pesquisa por todos' and ${iscandidatos})">
+
+			<table
+				class="table table-hover table-responsive w-auto table-striped">
+				<thead>
+					<tr>
+						<th scope="col">Nome do candidato:</th>
+						<th scope="col">RG:</th>
+						<th scope="col">E-mail:</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<tr th:each="candidato : ${candidatos}">
+						<td><span th:text="${candidato.nomeCandidato}"></span></td>
+						<td><span th:text="${candidato.rg}"></span></td>
+						<td><span th:text="${candidato.email}"></span></td>
+					</tr>
+
+
+				</tbody>
+			</table>
+		</div>
+		<div
+			th:unless="(${busca}=='Resultados da pesquisa por nome do candidato' and ${contador}>0) or (${busca}=='Resultados da pesquisa por todos' and ${iscandidatos})">
+		</div>
+		<div style="height: 100px;"></div>
+
+
+		<div class="footer-copyright fixed-bottom bg-dark text-center py-3">
+			<span class="text-light align-middle">| App RH - UC 12 | - ©
+				2022 Copyright: CTM Supervisão de Educação Online</span>
+		</div>
+
+		<!--JavaScript bootstrap-->
+		<script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+			crossorigin="anonymous">
+			
+		</script>
+</body>
+
+</html>
