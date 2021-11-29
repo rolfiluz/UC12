@@ -16,3 +16,5 @@
 Obs.: O projeto *não funciona* se não existir um banco (vazio) chamado AppRH no MySQL.
 
 Obs.: O App ainda está com bugs...rs
+
+Desenvolvido por Rolfi e Arthur
