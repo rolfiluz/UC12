@@ -12,9 +12,14 @@
 
 4º Acessar em: http://localhost:8080/
 
+5º Acesso as funcionalidades do sistema login admin e senha admin
+
+6º Arquivo aplication.properties deve ser alterado para acesso admin e banco de dados
+
+7º O App está com tratamento de erros e segurança baixa
+
+8º O sistema cadastra, edita, exclui e pesquisa as entidades Funcionario, Dependentes, Vagas e Candidatos
 
 Obs.: O projeto *não funciona* se não existir um banco (vazio) chamado AppRH no MySQL.
-
-Obs.: O App ainda está com bugs...rs
 
 Desenvolvido por Rolfi e Arthur
